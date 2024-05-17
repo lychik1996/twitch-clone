@@ -1,0 +1,7 @@
+npx rpisma studio 
+
+ngrok http --domain=bison-awaited-tarpon.ngrok-free.app 3000
+
+npx prisma migrate reset
+
+package 33:49
