@@ -16,6 +16,7 @@ export default function LiveVideo({participant}:LiveVideoProps){
     const [isFullscreen,setIsFullscreen] = useState(false);
     const [volume,setVolume] = useState(0);
 
+    
     const onVolumeChange = (value:number)=>{
         setVolume(+value);
         if(videoRef?.current){
