@@ -14,7 +14,9 @@ import { clerkMiddleware, createRouteMatcher,authMiddleware} from "@clerk/nextjs
 export default authMiddleware({
   publicRoutes:[
     "/",
-    "/api/webhooks(.*)"]
+    "/api/webhooks(.*)",
+    "/api/uploadthing",
+  ]
 })
 
 export const config = {
