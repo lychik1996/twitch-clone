@@ -15,7 +15,6 @@ export default async function CreatorPage({params}:CreatorPageProps){
    if(!user || user.externalUserId !== externalUser?.id  || !user.stream){
     throw new Error("Unautharized");
    }
-   
     return(
         <div className="h-full ">
             <StreamPlayer
