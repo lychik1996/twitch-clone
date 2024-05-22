@@ -6,10 +6,10 @@ import ConnectModal from "./_components/connect-modal";
 
 export default async function KeysPage() {
     const self = await getSelf();
-    const strem = await getStremByUserId(self.id);
+    const stream = await getStremByUserId(self.id);
 
-    if(!strem){
-        throw new Error("Strea not found")
+    if(!stream){
+        throw new Error("Stream not found")
     };
 
   return (
@@ -19,8 +19,8 @@ export default async function KeysPage() {
         <ConnectModal/>
       </div>
       <div className="space-y-4">
-            <UrlCard value={strem.serverUrl}/>
-            <KeyCard value={strem.streamKey}/>
+            <UrlCard value={stream.serverUrl}/>
+            <KeyCard value={stream.streamKey}/>
       </div>
     </div>
   );
