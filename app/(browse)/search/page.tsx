@@ -18,7 +18,6 @@ export default function SearchPage({searchParams}:SearchPageProps){
         <Suspense fallback={<ResultsSkeleton/>}>
         <Results term = {searchParams.term}/>
         </Suspense>
-        
         </div>
     )
 }
