@@ -16,6 +16,7 @@ type IngressType = typeof RTMP | typeof WHIP;
 
 export default function ConnectModal(){
     const closeRef = useRef<ElementRef<"button">>(null);
+    
     const [isPending, startTransition] = useTransition();
     const [ingressType, setIngressType] = useState<IngressType>(RTMP);
     const onSubmit = ()=>{
