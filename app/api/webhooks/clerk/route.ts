@@ -1,8 +1,10 @@
+
 import {Webhook} from 'svix';
 import { headers } from 'next/headers';
 import { WebhookEvent } from '@clerk/nextjs/server';
 import {db} from '@/lib/db'
 import { resetIngresses } from '@/actions/ingress';
+
 
 export async function POST(req:Request) {
     const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET
@@ -47,11 +49,13 @@ export async function POST(req:Request) {
 
     try {
         if (eventType === 'user.created') {
+
           await db.user.create({
             data: {
               externalUserId: payload.data.id,
               username: payload.data.username,
               imageUrl: payload.data.image_url,
+              email:payload.data.email_addresses[0].email_address,
               stream: {
                 create: {
                   name: `${payload.data.username}'s stream`,
@@ -60,7 +64,8 @@ export async function POST(req:Request) {
             }
           });
         } else if (eventType === 'user.updated') {
-
+          
+          
           await db.user.update({
             where: {
               externalUserId: payload.data.id

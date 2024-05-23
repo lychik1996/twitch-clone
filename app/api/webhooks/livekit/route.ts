@@ -2,6 +2,8 @@ import { headers } from 'next/headers';
 import { WebhookReceiver } from 'livekit-server-sdk';
 
 import { db } from '@/lib/db';
+import {sentToFollowersStartStream } from '@/lib/mail-service';
+import { sentNotificationStartStream } from '@/lib/cache/sentNotification';
 
 const LIVEKIT_API_KEY = process.env.LIVEKIT_API_KEY;
 const LIVEKIT_API_SECRET = process.env.LIVEKIT_API_SECRET;
@@ -13,7 +15,6 @@ if (!LIVEKIT_API_KEY || !LIVEKIT_API_SECRET) {
 }
 
 const receiver = new WebhookReceiver(LIVEKIT_API_KEY!, LIVEKIT_API_SECRET!);
-
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -37,6 +38,10 @@ export async function POST(req: Request) {
         isLive: true,
       },
     });
+    if (event.ingressInfo?.participantIdentity && !sentNotificationStartStream.has(event.ingressInfo?.participantIdentity)) {
+        await sentToFollowersStartStream(event.ingressInfo?.participantIdentity);
+        sentNotificationStartStream.add(event.ingressInfo?.participantIdentity);
+    }
   }
   if (event.event === 'ingress_ended') {
     await db.stream.update({
@@ -48,6 +53,7 @@ export async function POST(req: Request) {
         isLive: false,
       },
     });
+    sentNotificationStartStream.clear();
   }
   return new Response('',{status:200})
 }

@@ -6,7 +6,7 @@ import NavItem, { NavItemSkeleton } from "./nav-item";
 export default function Navigation(){
     const pathname = usePathname();
     const {user} = useUser();
-
+    
     const routes = [
         {
             label:"Stream",
